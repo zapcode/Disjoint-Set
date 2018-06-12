@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct item;
+struct node{
+    int data;
+    node *next;
+    int size = 1;
+};
+map<int, node *> address;
+void makeset(int a)       //ALL DATA NODES POINTING TO SELF
+{
+    node *newnode = new node;
+    newnode->data = a;
+    newnode->next = newnode;
+    address[a]=newnode->next;
+}
+ struct node *find(int key) 
+{
+   node *ptr = address[key];
+   while(ptr->next!=ptr)
+   {
+       ptr=ptr->next;
+   }
+   return ptr;
+}
+void Union(node *first,node *second)  //Union in heirarchial form or Tree Form
+{
+    if(first->size>second->size)
+    {
+        second->next=first;
+        first->size=first->size+second->size;
+        cout<<"New Size "<<first->size<<endl;
+        
+    }
+    else
+    {
+        first->next=second;
+        second->size+=first->size;
+        cout<<"New Size "<<second->size<<endl;
+    }
+}
+int main()
+{  
+    makeset(1);
+    makeset(2);
+    makeset(3);
+    makeset(4);
+    makeset(5);
+    makeset(6);
+    makeset(7);
+    makeset(8);
+cout<<"1 "<<find(1)<<endl;
+cout<<"2 "<<find(2)<<endl;
+cout<<"3 "<<find(3)<<endl;
+cout<<"4 "<<find(4)<<endl;
+cout<<"5 "<<find(5)<<endl;
+cout<<"6 "<<find(6)<<endl;
+cout<<"7 "<<find(7)<<endl;
+cout<<"8 "<<find(8)<<endl;
+Union(find(1),find(2));
+Union(find(3),find(4));
+Union(find(1),find(4));
+Union(find(5),find(6));
+Union(find(7),find(8));
+Union(find(5),find(7));
+Union(find(1),find(7));
+cout<<find(1)<<endl;
+cout<<find(2)<<endl;
+cout<<find(3)<<endl;
+cout<<find(4)<<endl;
+cout<<find(5)<<endl;
+cout<<find(6)<<endl;
+cout<<find(7)<<endl;
+cout<<find(8)<<endl;
+}
